@@ -1,0 +1,31 @@
+<form >
+  <h1>Register</h1>
+  <input id="pname" placeholder="Project Name">
+  <input id="plang" placeholder="Language">
+  <button type="button" onclick="open_dialog();" name="button">Select Project Path</button>
+  <input id="path_input" placeholder="Project Path">
+  <button type="button" onclick="form_save();">Save Project</button>
+</form>
+
+<script type="text/javascript">
+  var remote = require('electron').remote;
+  const {dialog} = require('electron').remote;
+  function open_dialog(){
+    var path = dialog.showOpenDialog({
+      properties: ['openDirectory']
+    });
+    $("#path_input")[0].value = path;
+
+
+  }
+</script>
+
+<!-- DATA SAVER -->
+<script type="text/javascript">
+//store.set('projects.x', "XDXD");
+// alert(store.get('projects.x'));
+
+function form_save(){
+  store.set('projects.'+Math.floor(Math.random() * 99999), {"name":$("#pname")[0].value, "lang":$("#plang")[0].value, "path":$("#path_input")[0].value });
+}
+</script>

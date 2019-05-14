@@ -1,0 +1,1 @@
+Projelerin bilgisayardaki kisayollarini toplayarak kolayca atom text ediyorunde acabilmek icin.

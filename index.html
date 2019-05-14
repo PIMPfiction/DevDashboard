@@ -1,0 +1,118 @@
+'<!-- https://codepen.io/Alca/pen/VByeJd -->
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Development DevDashboard</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="statics/css/photon.css">
+    <link rel="stylesheet" href="statics/cyber2/style.css">
+    <link rel="stylesheet" href="statics/form.css">
+
+  </head>
+  <body>
+
+    <div class="window">
+
+
+      <header class="toolbar toolbar-header">
+        <h1 class="title">Header the tabs</h1>
+      </header>
+
+      <div class="tab-group">
+        <div onclick="main_page(event);" class="tab-item active">
+          <span class="icon icon-cancel icon-close-tab"></span>
+          Dashboard
+        </div>
+        <div onclick="project_add(event);" class="tab-item">
+          <span class="icon icon-cancel icon-close-tab"></span>
+          Project Folder
+        </div>
+        <div class="tab-item">
+          <span class="icon icon-cancel icon-close-tab"></span>
+          Add Project
+        </div>
+        <div class="tab-item tab-item-fixed">
+          <span class="icon icon-plus"></span>
+        </div>
+      </div>
+
+
+
+      <div  class="window-content">
+        <div class="pane-group">
+          <div class="pane-sm sidebar">
+            <ul class="list-group">
+              <li class="list-group-header">
+                <input class="form-control" type="text" placeholder="Search for someone">
+              </li>
+
+            </ul>
+          </div>
+          <div id="content" class="pane">
+          </div>
+        </div>
+      </div>
+      <!-- jQuery CDN - Slim version (=without AJAX) -->
+      <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+      <script src="statics/jquery-3.0.0.min.js" charset="utf-8"></script>
+      <script>window.$ = window.jQuery = require('statics/jquery-3.0.0.min.js');</script>
+    <!-- Javascript -->
+    <script src="statics/js/menu.js" charset="utf-8"></script>
+    <script src="statics/cyber2/static.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js"></script>
+    <<script type="text/javascript">
+
+      const Store = require('electron-store');
+      const store = new Store();
+
+    </script>
+    <!-- SIDEBAR INIT -->
+    <script type="text/javascript">
+    function html_creator(lang, name, path){
+      html = "<li onclick='li_click(event);' class='list-group-item' value='"+path+"'> \
+        <img class='img-circle media-object pull-left' src='statics/img/"+lang+".png' width='32' height='32'> \
+        <div class='media-body'> \
+          <strong>"+name+"</strong> \
+          <p>Description Here</p> <span  class='icon icon-cancel'></span> \
+        </div> \
+      </li>"
+      return html
+    }
+      var store_obj = store.get('projects');
+      html = "<li class='list-group-header'> \
+        <input class='form-control' type='text' placeholder='Search for someone'> \
+      </li>"
+      Object.keys(store_obj).forEach(function(key){
+        html += html_creator(store_obj[key]["lang"], store_obj[key]["name"], store_obj[key]["path"]);
+	     });
+      $(".list-group").html(html);
+
+    </script>
+    <script type="text/javascript">
+      const electron = require('electron');
+      const { shell } = require('electron');
+      var execFile = require('child_process').execFile;
+      const { app, BrowserWindow } = require('electron');
+      $('#content').load('./main.html');
+      function li_click(event){
+        var x = event.target.closest('li').getAttribute("value");
+        execFile('D:\\Program Files\\atom\\atom.exe', [x],  console.log);
+      };
+
+      function main_page(event){
+        $('#content').load('./main.html');
+      }
+
+      function project_add(event){
+        $('#content').load('./add_project.html');
+      }
+    </script>
+
+
+
+  <script>if (window.module) module = window.module;</script>
+  </body>
+</html>
